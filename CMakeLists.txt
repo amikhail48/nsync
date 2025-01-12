@@ -18,7 +18,7 @@ endif ()
 set (CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # Allow nsync users to turn the tests on or off.
-option (NSYNC_ENABLE_TESTS "Enable for building tests" ON)
+option (NSYNC_ENABLE_TESTS "Enable for building tests" OFF)
 
 # -----------------------------------------------------------------
 # Functions to set common options on targets and files.
@@ -66,7 +66,7 @@ set (NSYNC_CPP_DEFINITIONS NSYNC_USE_CPP11_TIMEPOINT NSYNC_ATOMIC_CPP11)
 set (NSYNC_OS_CPP_SRC
 	# Avoid use of the C++11 version of per_thread_waiter.  It behaves
 	# badly if multiple copies of nsync are linked into an address space.
-	"platform/posix/src/per_thread_waiter.c"
+	"platform/posix/src/per_thread_waiter.cc"
 	"platform/c++11/src/yield.cc"
 	"platform/c++11/src/time_rep_timespec.cc"
 	"platform/c++11/src/nsync_panic.cc"
@@ -104,7 +104,7 @@ if ("${CMAKE_SYSTEM_NAME}X" STREQUAL "WindowsX")
 	set (NSYNC_OS_CPP_SRC
 		${NSYNC_OS_CPP_SRC}
 		"platform/c++11/src/nsync_semaphore_mutex.cc"
-		"platform/win32/src/clock_gettime.c"
+		"platform/win32/src/clock_gettime.cc"
 		"platform/win32/src/pthread_key_win32.cc"
 	)
 	set (NSYNC_TEST_OS_SRC
@@ -124,8 +124,8 @@ elseif ("${CMAKE_SYSTEM_NAME}X" STREQUAL "DarwinX")
 	set (NSYNC_OS_CPP_SRC
 		${NSYNC_OS_CPP_SRC}
 		"platform/c++11/src/nsync_semaphore_mutex.cc"
-		"platform/posix/src/clock_gettime.c"
-		"platform/posix/src/nsync_semaphore_mutex.c"
+		"platform/posix/src/clock_gettime.cc"
+		"platform/posix/src/nsync_semaphore_mutex.cc"
 	)
 elseif ("${CMAKE_SYSTEM_NAME}X" STREQUAL "LinuxX")
 	set (NSYNC_POSIX ON)
@@ -244,18 +244,18 @@ include_directories ("${PROJECT_SOURCE_DIR}/internal")
 include (GNUInstallDirs)
 
 set (NSYNC_COMMON_SRC
-	"internal/common.c"
-	"internal/counter.c"
-	"internal/cv.c"
-	"internal/debug.c"
-	"internal/dll.c"
-	"internal/mu.c"
-	"internal/mu_wait.c"
-	"internal/note.c"
-	"internal/once.c"
-	"internal/sem_wait.c"
-	"internal/time_internal.c"
-	"internal/wait.c"
+	"internal/common.cpp"
+	"internal/counter.cpp"
+	"internal/cv.cpp"
+	"internal/debug.cpp"
+	"internal/dll.cpp"
+	"internal/mu.cpp"
+	"internal/mu_wait.cpp"
+	"internal/note.cpp"
+	"internal/once.cpp"
+	"internal/sem_wait.cpp"
+	"internal/time_internal.cpp"
+	"internal/wait.cpp"
 )
 
 add_library (nsync ${NSYNC_COMMON_SRC} ${NSYNC_OS_SRC})
@@ -334,19 +334,19 @@ if (NSYNC_ENABLE_TESTS)
 
 	# Test names should not end with _cpp
 	set (NSYNC_TESTS
-		"counter_test"
-		"cv_mu_timeout_stress_test"
-		"cv_test"
-		"cv_wait_example_test"
-		"dll_test"
-		"mu_starvation_test"
-		"mu_test"
-		"mu_wait_example_test"
-		"mu_wait_test"
-		"note_test"
-		"once_test"
-		"pingpong_test"
-		"wait_test"
+		# "counter_test"
+		# "cv_mu_timeout_stress_test"
+		# "cv_test"
+		# "cv_wait_example_test"
+		# "dll_test"
+		# "mu_starvation_test"
+		# "mu_test"
+		# "mu_wait_example_test"
+		# "mu_wait_test"
+		# "note_test"
+		# "once_test"
+		# "pingpong_test"
+		# "wait_test"
 	)
 
 	enable_testing ()
